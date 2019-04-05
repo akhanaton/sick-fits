@@ -1,0 +1,12 @@
+type Dog {
+  name: String!
+  age: Int
+}
+
+type Mutation {
+  createDog(name: String!, age: Int): Dog
+}
+
+type Query {
+  dogs: [Dog]!
+}
