@@ -1,6 +1,6 @@
 const Mutations = {
   createDog(parent, args, ctx, info) {
-    return args;
+    return ctx;
   },
 };
 
