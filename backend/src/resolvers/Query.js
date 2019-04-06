@@ -1,10 +1,8 @@
 const Query = {
-  dogs(parent, args, ctx, info) {
-    return [
-      { name: 'Bingo', age: 7 },
-      { name: 'Tiger', age: 2 },
-      { name: 'Leo', age: 10 },
-    ];
+  async items(parent, args, ctx, info) {
+    const items = await ctx.db.query.items();
+
+    return items;
   },
 };
 
