@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import Item from './Item';
-
-const ALL_ITEMS_QUERY = gql`
-  query ALL_ITEMS_QUERY {
-    items {
-      id
-      title
-      price
-      description
-      image
-      largeImage
-    }
-  }
-`;
+import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 const Center = styled.div`
   text-align: center;
