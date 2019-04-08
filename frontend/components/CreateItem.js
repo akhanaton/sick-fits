@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
+import axios from 'axios';
 import Router from 'next/router';
 
 import ErrorMessage from './ErrorMessage';
@@ -24,6 +25,26 @@ class CreateItem extends Component {
     this.setState({ [name]: val });
   };
 
+  uploadFile = async event => {
+    console.log('Uploading file...');
+    const { files } = event.target;
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    formData.append('upload_preset', 'sickfits');
+
+    const { data } = await axios.post(
+      'https://api.cloudinary.com/v1_1/akhanaton/image/upload/',
+      formData
+    );
+
+    this.setState({
+      image: data.secure_url,
+      largeImage: data.eager[0].secure_url,
+    });
+
+    console.log(data);
+  };
+
   handleSubmit = createItem => async event => {
     event.preventDefault();
     const res = await createItem();
@@ -42,6 +63,18 @@ class CreateItem extends Component {
           <Form onSubmit={this.handleSubmit(createItem)}>
             <ErrorMessage error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <label htmlFor="file">
+                Image
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  placeholder="Upload a file"
+                  required
+                  onChange={this.uploadFile}
+                />
+                {image && <img src={image} alt="Upload preview" />}
+              </label>
               <label htmlFor="title">
                 Title
                 <input
