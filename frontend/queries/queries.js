@@ -34,3 +34,13 @@ export const SINGLE_ITEM_LARGE_IMAGE_QUERY = gql`
     }
   }
 `;
+
+export const PAGINATION_QUERY = gql`
+  query PAGINATION_QUERY {
+    itemsConnection {
+      aggregate {
+        count
+      }
+    }
+  }
+`;

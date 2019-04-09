@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import styled from 'styled-components';
 
 import Item from './Item';
+import Pagination from './Pagination';
 import { ALL_ITEMS_QUERY } from '../queries/queries';
 
 const Center = styled.div`
@@ -19,9 +21,10 @@ const ItemsList = styled.div`
 
 export default class Items extends Component {
   render() {
+    const { page } = this.props;
     return (
       <Center>
-        <p>Items</p>
+        <Pagination page={page} />
         <Query query={ALL_ITEMS_QUERY}>
           {({ data, error, loading }) => {
             if (loading) return <p>Loading...</p>;
@@ -35,6 +38,7 @@ export default class Items extends Component {
             );
           }}
         </Query>
+        <Pagination page={page} />
       </Center>
     );
   }
