@@ -41,8 +41,6 @@ class CreateItem extends Component {
       image: data.secure_url,
       largeImage: data.eager[0].secure_url,
     });
-
-    console.log(data);
   };
 
   handleSubmit = createItem => async event => {
