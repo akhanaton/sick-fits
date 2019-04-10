@@ -10,11 +10,11 @@ import formatMoney from '../lib/formatMoney';
 
 class CreateItem extends Component {
   state = {
-    title: 'Cool shoes',
-    description: 'These will make you the coolest cat in town',
-    image: 'shoes_small.jpg',
-    largeImage: 'shoes_large.jpg',
-    price: 20000,
+    title: '',
+    description: '',
+    image: '',
+    largeImage: '',
+    price: 0,
   };
 
   handleChange = event => {

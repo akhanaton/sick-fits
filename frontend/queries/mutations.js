@@ -49,3 +49,34 @@ export const DELETE_ITEM_MUTATION = gql`
     }
   }
 `;
+
+export const SIGNUP_MUTATION = gql`
+  mutation SIGNUP_MUTATION(
+    $email: String!
+    $name: String!
+    $password: String!
+  ) {
+    signup(name: $name, email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
+
+export const SIGNIN_MUTATION = gql`
+  mutation SIGNIN_MUTATION($email: String!, $password: String!) {
+    signin(email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
+export const SIGNOUT_MUTATION = gql`
+  mutation SIGN_OUT {
+    signout {
+      message
+    }
+  }
+`;
