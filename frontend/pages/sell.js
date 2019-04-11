@@ -1,8 +1,11 @@
 import CreateItem from '../components/CreateItem';
+import GatedSignIn from '../components/GatedSignin';
 
 const Sell = () => (
   <div>
-    <CreateItem />
+    <GatedSignIn>
+      <CreateItem />
+    </GatedSignIn>
   </div>
 );
 
