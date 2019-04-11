@@ -80,3 +80,29 @@ export const SIGNOUT_MUTATION = gql`
     }
   }
 `;
+
+export const REQUEST_RESET_MUTATION = gql`
+  mutation REQUEST_RESET($email: String!) {
+    requestReset(email: $email) {
+      message
+    }
+  }
+`;
+
+export const RESET_PASSWORD_MUTATION = gql`
+  mutation RESET_PASSWORD_MUTATION(
+    $password: String!
+    $confirmPassword: String!
+    $resetToken: String!
+  ) {
+    resetPassword(
+      password: $password
+      confirmPassword: $confirmPassword
+      resetToken: $resetToken
+    ) {
+      id
+      name
+      email
+    }
+  }
+`;
