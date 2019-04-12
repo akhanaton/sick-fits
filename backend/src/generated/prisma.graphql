@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/enitan-williams-2e407b/sick-fitz/dev
-# timestamp: Thu Apr 11 2019 20:20:07 GMT+0200 (Central European Summer Time)
+# timestamp: Fri Apr 12 2019 12:44:19 GMT+0200 (Central European Summer Time)
 
 type AggregateItem {
   count: Int!
