@@ -120,3 +120,11 @@ export const UPDATE_PERMISSIONS_MUTATION = gql`
     }
   }
 `;
+
+// Local
+
+export const TOGGLE_CART_MUTATION = gql`
+  mutation TOGGLE_CART_MUTATION {
+    toggleCart @client
+  }
+`;

@@ -67,3 +67,11 @@ export const ALL_USERS_QUERY = gql`
     }
   }
 `;
+
+// Local State
+
+export const CART_OPEN_QUERY = gql`
+  query CART_OPEN_QUERY {
+    cartOpen @client
+  }
+`;
