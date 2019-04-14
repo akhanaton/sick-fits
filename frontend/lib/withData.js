@@ -26,7 +26,6 @@ function createClient({ headers }) {
             const data = {
               data: { cartOpen: !cartOpen },
             };
-            console.log(data);
             cache.writeData(data);
             return data;
           },

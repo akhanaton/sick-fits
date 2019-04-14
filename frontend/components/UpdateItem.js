@@ -30,8 +30,6 @@ class UpdateItem extends Component {
       },
     });
 
-    console.log('Updated.');
-
     /**
       Router.push({
         pathname: '/item',

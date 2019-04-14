@@ -26,7 +26,6 @@ class CreateItem extends Component {
   };
 
   uploadFile = async event => {
-    console.log('Uploading file...');
     const { files } = event.target;
     const formData = new FormData();
     formData.append('file', files[0]);

@@ -171,6 +171,66 @@ const Mutations = {
       info
     );
   },
+  async addToCart(parent, args, ctx, info) {
+    if (!ctx.request.userId)
+      throw new Error('You must be logged in to do that.');
+    const { userId } = ctx.request;
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
+      },
+    });
+
+    if (existingCartItem) {
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 },
+        },
+        info
+      );
+    }
+
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId },
+          },
+          item: {
+            connect: { id: args.id },
+          },
+        },
+      },
+      info
+    );
+  },
+  async removeItem(parent, args, ctx, info) {
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      `{id, user { id }}`
+    );
+
+    if (!cartItem) throw new Error('No cart item found.');
+    if (cartItem.user.id !== ctx.request.userId)
+      throw new Error("You can't delete this item");
+
+    const deletedItem = await ctx.db.mutation.deleteCartItem(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      info
+    );
+
+    return deletedItem;
+  },
 };
 
 module.exports = Mutations;

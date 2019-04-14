@@ -121,6 +121,23 @@ export const UPDATE_PERMISSIONS_MUTATION = gql`
   }
 `;
 
+export const ADD_TO_CART_MUTATION = gql`
+  mutation ADD_TO_CART_MUTATION($id: ID!) {
+    addToCart(id: $id) {
+      id
+      quantity
+    }
+  }
+`;
+
+export const REMOVE_FROM_CART_MUTATION = gql`
+  mutation REMOVE_FROM_CART_MUTATION($id: ID!) {
+    removeItem(id: $id) {
+      id
+    }
+  }
+`;
+
 // Local
 
 export const TOGGLE_CART_MUTATION = gql`
