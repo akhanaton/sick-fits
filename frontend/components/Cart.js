@@ -2,22 +2,25 @@ import React from 'react';
 import { Query, Mutation } from 'react-apollo';
 import { adopt } from 'react-adopt';
 
-import { CART_OPEN_QUERY } from '../queries/queries';
 import { TOGGLE_CART_MUTATION } from '../queries/mutations';
-import calcTotalPrice from '../lib/calcTotalPrice';
-import formatMoney from '../lib/formatMoney';
+import { CART_OPEN_QUERY } from '../queries/queries';
 import User from './User';
-import CartItem from './CartItem';
 import CartStyles from './styles/CartStyles';
 import Supreme from './styles/Supreme';
 import CloseButton from './styles/CloseButton';
 import SickButton from './styles/SickButton';
+import CartItem from './CartItem';
+import calcTotalPrice from '../lib/calcTotalPrice';
+import formatMoney from '../lib/formatMoney';
+import Payment from './Payment';
 
+/* eslint-disable */
 const Composed = adopt({
-  user: <User />,
-  toggleCart: <Mutation mutation={TOGGLE_CART_MUTATION} />,
-  localState: <Query query={CART_OPEN_QUERY} />,
+  user: ({ render }) => <User>{render}</User>,
+  toggleCart: ({ render }) => <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>,
+  localState: ({ render }) => <Query query={CART_OPEN_QUERY}>{render}</Query>,
 });
+/* eslint-enable */
 
 const Cart = () => (
   <Composed>
@@ -30,10 +33,10 @@ const Cart = () => (
             <CloseButton onClick={toggleCart} title="close">
               &times;
             </CloseButton>
-            <Supreme>{me.name} Cart</Supreme>
+            <Supreme>{me.name}'s Cart</Supreme>
             <p>
-              You have {me.cart.length} item
-              {me.cart.length > 1 ? 's' : ''} in your cart
+              You Have {me.cart.length} Item{me.cart.length === 1 ? '' : 's'} in
+              your cart.
             </p>
           </header>
           <ul>
@@ -43,7 +46,9 @@ const Cart = () => (
           </ul>
           <footer>
             <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-            <SickButton>Checkout</SickButton>
+            <Payment>
+              <SickButton>Checkout</SickButton>
+            </Payment>
           </footer>
         </CartStyles>
       );

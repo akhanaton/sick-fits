@@ -5,6 +5,8 @@ const { promisify } = require('util');
 const { hasPermission } = require('../utils');
 const { transport, makeANiceEmail } = require('../mail');
 
+const stripe = require('../stripe');
+
 const Mutations = {
   async createItem(parent, args, ctx, info) {
     if (!ctx.request.userId)
@@ -230,6 +232,32 @@ const Mutations = {
     );
 
     return deletedItem;
+  },
+  async createOrder(parent, args, ctx, info) {
+    if (!ctx.request.userId)
+      throw new Error('You must be logged in to complete the order.');
+    const { userId } = ctx.request;
+    const currentUser = await ctx.db.query.user(
+      {
+        where: {
+          id: userId,
+        },
+      },
+      `{id name email cart { id quantity item { title price id description image}}}`
+    );
+
+    const amount = currentUser.cart.reduce(
+      (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
+      0
+    );
+
+    console.log(`Going to charge for a total of ${amount}`);
+
+    const charge = await stripe.charges.create({
+      amount,
+      currency: 'USD',
+      source: args.token,
+    });
   },
 };
 

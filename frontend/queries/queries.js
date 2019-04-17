@@ -79,6 +79,23 @@ export const ALL_USERS_QUERY = gql`
   }
 `;
 
+export const SEARCH_TERM_QUERY = gql`
+  query SEARCH_TERM_QUERY($searchTerm: String!) {
+    items(
+      where: {
+        OR: [
+          { title_contains: $searchTerm }
+          { description_contains: $searchTerm }
+        ]
+      }
+    ) {
+      id
+      image
+      title
+    }
+  }
+`;
+
 // Local State
 
 export const CART_OPEN_QUERY = gql`

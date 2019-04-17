@@ -23,7 +23,6 @@ class RemoveFromCart extends Component {
   };
 
   update = (cache, payload) => {
-    console.log('Running remove from cart update function.');
     const data = cache.readQuery({
       query: CURRENT_USER_QUERY,
     });
