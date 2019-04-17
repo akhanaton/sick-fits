@@ -4,12 +4,10 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Mutation } from 'react-apollo';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import PropTypes from 'prop-types';
 import { CURRENT_USER_QUERY } from '../queries/queries';
 import calcTotalPrice from '../lib/calcTotalPrice';
 import { CREATE_ORDER_MUTATION } from '../queries/mutations';
 import User from './User';
-import Error from './ErrorMessage';
 
 function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0);

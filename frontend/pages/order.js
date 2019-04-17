@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import GatedSignIn from '../components/GatedSignin';
+import Order from '../components/Order';
 
-const Order = ({ query: { id } }) => (
+const OrderPage = ({ query: { id } }) => (
   <div>
     <GatedSignIn>
-      <p>This is a single order: {id}</p>
+      <Order id={id} />
     </GatedSignIn>
   </div>
 );
 
-export default Order;
+export default OrderPage;

@@ -16,6 +16,8 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission]
   cart: [CartItem!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Item {
@@ -26,6 +28,8 @@ type Item {
   largeImage: String
   price: Int!
   user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type CartItem {
@@ -52,4 +56,6 @@ type Order {
   total: Int!
   user: User!
   charge: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
