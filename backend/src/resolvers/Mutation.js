@@ -101,8 +101,8 @@ const Mutations = {
     const user = await ctx.db.query.user({ where: { email } });
     if (!user) throw new Error(`No user for email: ${email}`);
 
-    const reandomBytesPromisified = promisify(randomBytes);
-    const resetToken = (await reandomBytesPromisified(20)).toString('hex');
+    const randomBytesPromisified = promisify(randomBytes);
+    const resetToken = (await randomBytesPromisified(20)).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000;
     const res = await ctx.db.mutation.updateUser({
       where: { email },
@@ -237,27 +237,51 @@ const Mutations = {
     if (!ctx.request.userId)
       throw new Error('You must be logged in to complete the order.');
     const { userId } = ctx.request;
-    const currentUser = await ctx.db.query.user(
+    const user = await ctx.db.query.user(
       {
         where: {
           id: userId,
         },
       },
-      `{id name email cart { id quantity item { title price id description image}}}`
+      `{id name email cart { id quantity item { title price id description image largeImage}}}`
     );
 
-    const amount = currentUser.cart.reduce(
+    const amount = user.cart.reduce(
       (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
       0
     );
-
-    console.log(`Going to charge for a total of ${amount}`);
 
     const charge = await stripe.charges.create({
       amount,
       currency: 'USD',
       source: args.token,
     });
+
+    const orderItems = user.cart.map(cartItem => {
+      const orderItem = {
+        quantity: cartItem.quantity,
+        user: { connect: { id: userId } },
+        ...cartItem.item,
+      };
+      delete orderItem.id;
+      return orderItem;
+    });
+
+    const order = await ctx.db.mutation.createOrder({
+      data: {
+        total: charge.amount,
+        charge: charge.id,
+        items: { create: orderItems },
+        user: { connect: { id: userId } },
+      },
+    });
+
+    const cartItemIds = user.cart.map(cartItem => cartItem.id);
+    await ctx.db.mutation.deleteManyCartItems({
+      where: { id_in: cartItemIds },
+    });
+
+    return order;
   },
 };
 

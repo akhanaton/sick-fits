@@ -16,16 +16,20 @@ function totalItems(cart) {
 }
 
 class Payment extends React.Component {
-  onTokenReceive = (res, createOrder) => {
-    console.log('OnToken called...');
-    console.log(res);
+  onTokenReceive = async (res, createOrder) => {
+    NProgress.start();
 
-    createOrder({
+    const order = await createOrder({
       variables: {
         token: res.id,
       },
     }).catch(err => {
       alert(err.message);
+    });
+
+    Router.push({
+      pathname: '/order',
+      query: { id: order.data.createOrder.id },
     });
   };
 
@@ -43,7 +47,9 @@ class Payment extends React.Component {
                 amount={calcTotalPrice(me.cart)}
                 name="Sick fits"
                 description={`Order of ${totalItems(me.cart)} items.`}
-                image={me.cart[0].item && me.cart[0].item.image}
+                image={
+                  me.cart.length && me.cart[0].item && me.cart[0].item.image
+                }
                 stripeKey="pk_test_kVbY2NQ3ssFnIahw3al8GZmw00b3zCbktt"
                 currency="USD"
                 email={me.email}
