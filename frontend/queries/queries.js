@@ -118,6 +118,24 @@ export const SINGLE_ORDER_QUERY = gql`
   }
 `;
 
+export const USER_ORDERS_QUERY = gql`
+  query USER_ORDERS_QUERY {
+    orders(orderBy: createdAt_DESC) {
+      id
+      total
+      createdAt
+      items {
+        id
+        title
+        price
+        description
+        quantity
+        image
+      }
+    }
+  }
+`;
+
 // Local State
 
 export const CART_OPEN_QUERY = gql`
