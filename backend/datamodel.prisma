@@ -16,8 +16,8 @@ type User {
   resetTokenExpiry: Float
   permissions: [Permission!]! @scalarList(strategy: RELATION)
   cart: [CartItem!]! @scalarList(strategy: RELATION)
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Item {
@@ -28,8 +28,8 @@ type Item {
   largeImage: String
   price: Int!
   user: User!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type CartItem {
@@ -37,8 +37,8 @@ type CartItem {
   quantity: Int! @default(value: 1)
   item: Item # relationship to Item
   user: User! # relationship to User
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type OrderItem {
@@ -50,8 +50,8 @@ type OrderItem {
   price: Int!
   quantity: Int! @default(value: 1)
   user: User!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Order {
@@ -60,6 +60,6 @@ type Order {
   total: Int!
   user: User!
   charge: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
