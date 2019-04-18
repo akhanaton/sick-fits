@@ -55,6 +55,7 @@ export default class Signup extends Component {
                   value={name}
                   placeholder="name"
                   onChange={this.saveToState}
+                  autoComplete="username"
                 />
               </label>
               <label htmlFor="password">
@@ -65,6 +66,7 @@ export default class Signup extends Component {
                   value={password}
                   placeholder="password"
                   onChange={this.saveToState}
+                  autoComplete="new-password"
                 />
               </label>
               <button type="submit">Sign Up</button>

@@ -18,6 +18,7 @@ export default class Signin extends Component {
 
   render() {
     const { name, email, password } = this.state;
+
     return (
       <Mutation
         mutation={SIGNIN_MUTATION}
@@ -30,6 +31,7 @@ export default class Signin extends Component {
             onSubmit={async e => {
               e.preventDefault();
               const res = await signin();
+              console.log(res);
               this.setState({ name: '', email: '', password: '' });
             }}
           >
@@ -44,6 +46,7 @@ export default class Signin extends Component {
                   value={email}
                   placeholder="email"
                   onChange={this.saveToState}
+                  autoComplete="username"
                 />
               </label>
               <label htmlFor="password">
@@ -54,6 +57,7 @@ export default class Signin extends Component {
                   value={password}
                   placeholder="password"
                   onChange={this.saveToState}
+                  autoComplete="current-password"
                 />
               </label>
               <button type="submit">Sign In</button>
